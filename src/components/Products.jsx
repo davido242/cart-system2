@@ -4,18 +4,26 @@ import { useState, useEffect } from 'react'
 export default function Products() {
   const [products, setProducts] = useState([])
 
-  
+  async function getProducts() {
+    const response = await fetch('https://dummyjson.com/products')
+    const data = await response.json()
+    setProducts(data.products)
+  }
 
   useEffect(() => {
-    try {fetch('https://dummyjson.com/products')
-      .then((res) => res.json())
-      .then((data) => {
-        setProducts(data.products)
-      })}
-      catch{((error) => {
-        console.error('Error fetching data:', error);
-      })}
+    getProducts()
   }, [])
+
+  // useEffect(() => {
+  //   try {fetch('https://dummyjson.com/products')
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setProducts(data.products)
+  //     })}
+  //     catch{((error) => {
+  //       console.error('Error fetching data:', error);
+  //     })}
+  // }, [])
 
   return (
     <div className='flex flex-col justify-center bg-gray-100'>

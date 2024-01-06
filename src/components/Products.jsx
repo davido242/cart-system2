@@ -1,8 +1,16 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react';
+import { CartContext } from '../context/cartContext';
+import  Cart  from './Cart';
 
 
 export default function Products() {
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState([]);
+  const {cartItems, addToCart} = useContext(CartContext);
+  const [showModal, setShowModal] = useState(false);
+
+  function toggleModal() {
+    setShowModal(!showModal);
+  }
 
   async function getProducts() {
     const response = await fetch('https://dummyjson.com/products')
@@ -25,11 +33,28 @@ export default function Products() {
   //     })}
   // }, [])
 
+  // second 
+  // useEffect(() => {
+  //   try {fetch('https://dummyjson.com/products', {
+  //     method: 'GET',
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setProducts(data.products)
+  //     })}
+  //     catch{((error) => {
+  //       console.error('Error fetching data:', error);
+  //     })}
+  // }, [])
+
   return (
     <div className='flex flex-col justify-center bg-gray-100'>
       <div className='flex justify-between items-center px-20 py-5'>
         <h1 className='text-2xl uppercase font-bold mt-10 text-center mb-10'>Shop</h1>
-        <h1 className='text-2xl uppercase font-bold mt-10 text-center mb-10'>Cart</h1>
+        {!showModal &&
+        <button className='px-4 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded hover:bg-gray-700 focus:outline-none focus:bg-gray-700' onClick={toggleModal}>
+          Cart {cartItems.length}</button>
+      }
       </div>
       <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-10'>
         {
@@ -42,12 +67,13 @@ export default function Products() {
                 <p className='mt-2 text-gray-600'>${product.price}</p>
               </div>
               <div className='mt-6 flex justify-between items-center'>
-                <button className='px-4 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded hover:bg-gray-700 focus:outline-none focus:bg-gray-700'>Add to cart</button>
+                <button onClick={() => addToCart(product)} className='px-4 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded hover:bg-gray-700 focus:outline-none focus:bg-gray-700'>Add to cart</button>
               </div>
             </div>
           ))
         }
       </div>
+      <Cart showModal={showModal} toggleModal={toggleModal} />
     </div>
   )
 }

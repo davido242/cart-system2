@@ -78,7 +78,9 @@ export const CartProvider = ({ children }) => {
       {children}
     </CartContext.Provider>
   );
-};
+
+
+}
 
 
 // test Return within clearCart function and  increament by ++

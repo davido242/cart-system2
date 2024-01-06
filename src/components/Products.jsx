@@ -73,7 +73,7 @@ export default function Products() {
           ))
         }
       </div>
-      <Cart showModal={showModal} toggleModal={toggleModal} />
+      <Cart showModal={showModal} toggle={toggleModal} />
     </div>
   )
 }

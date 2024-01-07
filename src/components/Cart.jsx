@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { CartContext } from '../context/cartContext';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 export default function Cart({showModal, toggle}) {
   const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal } = useContext(CartContext);

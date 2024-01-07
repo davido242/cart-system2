@@ -12,40 +12,18 @@ export default function Products() {
     setShowModal(!showModal);
   }
 
-  async function getProducts() {
-    const response = await fetch('https://dummyjson.com/products')
-    const data = await response.json()
-    setProducts(data.products)
-  }
-
   useEffect(() => {
-    getProducts()
+    fetch('https://dummyjson.com/products', {
+      method: 'GET',
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data.products)
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      })
   }, [])
-
-  // useEffect(() => {
-  //   try {fetch('https://dummyjson.com/products')
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setProducts(data.products)
-  //     })}
-  //     catch{((error) => {
-  //       console.error('Error fetching data:', error);
-  //     })}
-  // }, [])
-
-  // second 
-  // useEffect(() => {
-  //   try {fetch('https://dummyjson.com/products', {
-  //     method: 'GET',
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setProducts(data.products)
-  //     })}
-  //     catch{((error) => {
-  //       console.error('Error fetching data:', error);
-  //     })}
-  // }, [])
 
   return (
     <div className='flex flex-col justify-center bg-gray-100'>

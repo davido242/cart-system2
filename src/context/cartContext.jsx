@@ -29,14 +29,14 @@ export const CartProvider = ({ children }) => {
     if (isItemInCart.quantity === 1) {
       // check if cart item is 1, remove from cart
       setCartItems(
-        cartItems.filter((cartItem) => cartItem.id === item.id),
+        cartItems.filter((cartItem) => cartItem.id !== item.id),
       )
     }
     // else if more than one item is found, decrease by one
     else {
       setCartItems(
         cartItems.map((cartItem) => cartItem.id === item.id ?
-          { cartItem, quantity: cartItem.quantity - 1 } : cartItem
+          { ...cartItem, quantity: cartItem.quantity - 1 } : cartItem
         )
       );
     }
